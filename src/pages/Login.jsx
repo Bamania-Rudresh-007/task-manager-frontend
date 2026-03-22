@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Login() {
   return (
     <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-4 font-mono">
@@ -86,9 +88,9 @@ export default function Login() {
 
           <p className="text-center text-zinc-500 text-sm">
             Don't have an account?{" "}
-            <a href="#" className="text-[#c8f04d] hover:underline font-medium">
+            <Link to="signup" className="text-[#c8f04d] hover:underline font-medium">
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
 
