@@ -1,6 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import API from "../api/axios";
+import { useState } from "react";
 
 export default function Login() {
+
+    const navigate = useNavigate()
+
+    const [userInfo, setUserInfo] = useState({
+        email: "",
+        password: "",
+    });
+
+
+    const handleOnChange = (e) => {
+        const {id , value} = e.target;
+        setUserInfo((prev) => ({...prev, [id]: value}));
+    }
+
+    const handleOnSubmit = () => {
+        API.post("/auth/login", userInfo)
+            .then((res) => {
+                if(res.data.message === "Login Successfull"){
+                    localStorage.setItem("token", JSON.stringify(res.data.token))
+                    localStorage.setItem("CurrentUserDetail", JSON.stringify(res.data.data))
+                    navigate("/dashboard")
+                }
+             })
+            .catch((error) => console.log(error));
+    }
+
   return (
     <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-4 font-mono">
       {/* Background grid */}
@@ -29,7 +57,7 @@ export default function Login() {
               </svg>
             </div>
             <span className="text-white text-xl font-bold tracking-tight">
-              Doist<span className="text-[#c8f04d]">.</span>
+              Rudresh<span className="text-[#c8f04d]">.</span>
             </span>
           </div>
           <p className="text-zinc-500 text-sm tracking-widest uppercase">
@@ -55,6 +83,8 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="you@example.com"
+                id="email"
+                onChange={handleOnChange}
                 className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
               />
             </div>
@@ -69,12 +99,14 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="••••••••"
+                id="password"
+                onChange={handleOnChange}
                 className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
               />
             </div>
 
             {/* Submit */}
-            <button className="w-full bg-[#c8f04d] hover:bg-[#d6f76a] text-[#0f0f0f] font-bold py-3 rounded-lg text-sm tracking-wide transition-all active:scale-[0.98] mt-2">
+            <button className="w-full bg-[#c8f04d] hover:bg-[#d6f76a] text-[#0f0f0f] font-bold py-3 rounded-lg text-sm tracking-wide transition-all active:scale-[0.98] mt-2" onClick={handleOnSubmit}>
               Sign In
             </button>
           </div>
