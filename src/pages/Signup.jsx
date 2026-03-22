@@ -31,16 +31,17 @@ export default function Signup() {
         }
         API.post("/auth/signup", userInfo)
             .then((res) => {
-                console.log(res);
                 if (res.data.message === "User registered successfully...") {
                     localStorage.setItem("CurrentUserDetail", JSON.stringify(res.data.data))
+                    setUserInfo({ name: "", email: "", password: "" });
+                    localStorage.setItem("token", JSON.stringify(res.data.token));
                     navigate("/dashboard");
+
                 }
             })
             .catch((error) => {
                 console.log(error);
             });
-        setUserInfo({ name: "", email: "", password: "" });
     };
 
     return (
