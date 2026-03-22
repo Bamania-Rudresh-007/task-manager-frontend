@@ -1,4 +1,28 @@
+import API from "../api/axios";
+import { useEffect, useState } from "react";
+
 export default function Signup() {
+    const [ userInfo, setUserInfo ] = useState({name: "",email: "",password: "",})
+
+    useEffect(() => {
+        console.log(userInfo)
+    }, [userInfo]);
+
+    const handleOnChange = (e) => {
+        // console.log(e.target.id);
+        const { id, value} = e.target;
+        setUserInfo((prev) => ({...prev, [id]: value}));
+    }
+
+    const handleSubmit = () => {
+        API.post("/auth/signup", userInfo)
+            .then((res) => console.log(res))
+            .catch((error) => {
+                console.log(error);
+            })
+        setUserInfo({name: "",email: "",password: "",});
+    };
+
   return (
     <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-4 font-mono">
       {/* Background grid */}
@@ -26,8 +50,7 @@ export default function Signup() {
                 />
               </svg>
             </div>
-            <span className="text-white text-xl font-bold tracking-tight">
-              Doist<span className="text-[#c8f04d]">.</span>
+            <span className="text-white text-xl font-bold tracking-tight">Doist<span className="text-[#c8f04d]">.</span>
             </span>
           </div>
           <p className="text-zinc-500 text-sm tracking-widest uppercase">
@@ -52,7 +75,9 @@ export default function Signup() {
               </label>
               <input
                 type="text"
+                id="name"
                 placeholder="John Doe"
+                onChange={(e) => handleOnChange(e)}
                 className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
               />
             </div>
@@ -64,7 +89,9 @@ export default function Signup() {
               </label>
               <input
                 type="email"
+                id="email"
                 placeholder="you@example.com"
+                onChange={(e) => handleOnChange(e)}
                 className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
               />
             </div>
@@ -76,7 +103,9 @@ export default function Signup() {
               </label>
               <input
                 type="password"
+                id="password"
                 placeholder="••••••••"
+                onChange={(e) => handleOnChange(e)}
                 className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
               />
               {/* Password strength hint */}
@@ -91,30 +120,8 @@ export default function Signup() {
               </p>
             </div>
 
-            {/* Terms checkbox */}
-            <div className="flex items-start gap-3 pt-1">
-              <input
-                type="checkbox"
-                id="terms"
-                className="mt-0.5 w-4 h-4 accent-[#c8f04d] bg-[#0f0f0f] border-zinc-700 rounded cursor-pointer"
-              />
-              <label
-                htmlFor="terms"
-                className="text-zinc-500 text-xs leading-relaxed cursor-pointer"
-              >
-                I agree to the{" "}
-                <a href="#" className="text-[#c8f04d] hover:underline">
-                  Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="#" className="text-[#c8f04d] hover:underline">
-                  Privacy Policy
-                </a>
-              </label>
-            </div>
-
             {/* Submit */}
-            <button className="w-full bg-[#c8f04d] hover:bg-[#d6f76a] text-[#0f0f0f] font-bold py-3 rounded-lg text-sm tracking-wide transition-all active:scale-[0.98] mt-2">
+            <button className="w-full bg-[#c8f04d] hover:bg-[#d6f76a] text-[#0f0f0f] font-bold py-3 rounded-lg text-sm tracking-wide transition-all active:scale-[0.98] mt-2" onClick={handleSubmit}>
               Create Account
             </button>
           </div>
