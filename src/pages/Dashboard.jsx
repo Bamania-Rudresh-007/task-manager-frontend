@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TaskCard from "../components/TaskCard.jsx";
 import AddTaskModal from "../components/AddTaskModal.jsx";
+import useUsers from "../context/User.jsx";
 
 const SAMPLE_TODOS = [
   { _id: "1", title: "Design database schema", description: "Plan out all collections and relationships for the project", status: "complete" },
@@ -13,11 +14,14 @@ const SAMPLE_TODOS = [
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
-
+    const {userDetail} = useUsers();
   const total = SAMPLE_TODOS.length;
   const completed = SAMPLE_TODOS.filter((t) => t.status === "complete").length;
   const pending = SAMPLE_TODOS.filter((t) => t.status === "pending").length;
   const percent = Math.round((completed / total) * 100);
+
+
+    // const nameAlpahabet1 = userDetail.name.split(" ")[0][0];
 
   const filtered =
     activeFilter === "all"
@@ -66,11 +70,11 @@ function Dashboard() {
         <div className="border-t border-zinc-800 pt-5">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#c8f04d]/20 border border-[#c8f04d]/30 flex items-center justify-center text-[#c8f04d] text-xs font-bold">
-              JD
+                RD
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-white text-xs font-medium truncate">John Doe</p>
-              <p className="text-zinc-600 text-xs truncate">john@example.com</p>
+              <p className="text-white text-xs font-medium truncate">{userDetail.name}</p>
+              <p className="text-zinc-600 text-xs truncate">{userDetail.email}</p>
             </div>
             <button className="text-zinc-600 hover:text-zinc-400 transition-colors text-xs">
               ⏻
