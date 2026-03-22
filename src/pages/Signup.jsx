@@ -31,14 +31,14 @@ export default function Signup() {
         }
         API.post("/auth/signup", userInfo)
             .then((res) => {
-                if (res.data.message === "User registered successfully...") {
-                    localStorage.setItem("CurrentUserDetail", JSON.stringify(res.data.data))
-                    setUserInfo({ name: "", email: "", password: "" });
-                    localStorage.setItem("token", JSON.stringify(res.data.token));
-                    navigate("/dashboard");
-
-                }
-            })
+            if (res.data.message === "User registered successfully...") {
+                localStorage.setItem("CurrentUserDetail", JSON.stringify(res.data.data))
+                localStorage.setItem("token", JSON.stringify(res.data.token));
+                setUserDetail(res.data.data); 
+                setUserInfo({ name: "", email: "", password: "" });
+                navigate("/dashboard");
+            }
+        })
             .catch((error) => {
                 console.log(error);
             });
@@ -103,7 +103,7 @@ export default function Signup() {
                             <input
                                 type="text"
                                 id="name"
-                                placeholder="John Doe"
+                                placeholder="Bamania Rudresh"
                                 onChange={(e) => handleOnChange(e)}
                                 className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
                             />

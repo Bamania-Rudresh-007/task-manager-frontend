@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { useState } from "react";
+import useUsers from "../context/User";
 
 export default function Login() {
 
     const navigate = useNavigate()
-
+    const { setUserDetail } = useUsers()
     const [userInfo, setUserInfo] = useState({
         email: "",
         password: "",
@@ -23,6 +24,7 @@ export default function Login() {
                 if(res.data.message === "Login Successfull"){
                     localStorage.setItem("token", JSON.stringify(res.data.token))
                     localStorage.setItem("CurrentUserDetail", JSON.stringify(res.data.data))
+                    setUserDetail(res.data.data);
                     navigate("/dashboard")
                 }
              })

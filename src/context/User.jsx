@@ -14,6 +14,7 @@ export function UserProvider({children}){
         }
         catch(error){
             console.log("Failed fetching currentUserDetail from local storage Error: ", error);
+            return {};
         }
     });
     const value = {

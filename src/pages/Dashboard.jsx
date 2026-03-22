@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskCard from "../components/TaskCard.jsx";
 import AddTaskModal from "../components/AddTaskModal.jsx";
 import useUsers from "../context/User.jsx";
@@ -17,6 +17,7 @@ function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [nameAlpahabet, setNameAlpahabet] = useState("");
     const {userDetail} = useUsers();
   const total = SAMPLE_TODOS.length;
   const completed = SAMPLE_TODOS.filter((t) => t.status === "complete").length;
@@ -24,7 +25,11 @@ function Dashboard() {
   const percent = Math.round((completed / total) * 100);
 
     const navigate = useNavigate()
-    const nameAlpahabet = userDetail.name.split(" ")[0][0].toUpperCase();
+    useEffect(() => {
+        if (userDetail?.name) {
+            setNameAlpahabet(userDetail.name.split(" ")[0][0].toUpperCase());
+        }
+    }, [userDetail])
 
     const handleLogout = () => {
         localStorage.removeItem("token");
