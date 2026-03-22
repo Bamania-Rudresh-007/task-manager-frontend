@@ -21,7 +21,7 @@ function Dashboard() {
   const percent = Math.round((completed / total) * 100);
 
 
-    // const nameAlpahabet1 = userDetail.name.split(" ")[0][0];
+    const nameAlpahabet = userDetail.name.split(" ")[0][0].toUpperCase();
 
   const filtered =
     activeFilter === "all"
@@ -40,7 +40,7 @@ function Dashboard() {
             </svg>
           </div>
           <span className="text-white text-lg font-bold tracking-tight">
-            Doist<span className="text-[#c8f04d]">.</span>
+            Rudresh<span className="text-[#c8f04d]">.</span>
           </span>
         </div>
 
@@ -70,7 +70,7 @@ function Dashboard() {
         <div className="border-t border-zinc-800 pt-5">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#c8f04d]/20 border border-[#c8f04d]/30 flex items-center justify-center text-[#c8f04d] text-xs font-bold">
-                RD
+                {nameAlpahabet}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-white text-xs font-medium truncate">{userDetail.name}</p>
