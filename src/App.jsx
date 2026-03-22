@@ -1,9 +1,10 @@
+import Login from "./pages/Login"
 
 function App() {
 
   return (
     <>
-      <h1 className="text-cyan-500">Radhe Radhe</h1>
+      <Dashboard />
     </>
   )
 }
