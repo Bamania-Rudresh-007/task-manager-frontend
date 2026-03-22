@@ -5,6 +5,7 @@ import { UserProvider } from "./context/User.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import ProtectedRouter from "./components/ProtectedRoutes.jsx";
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <ProtectedRouter><Dashboard /></ProtectedRouter>,
     },
 ]);
 
