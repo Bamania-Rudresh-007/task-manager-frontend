@@ -30,7 +30,7 @@ function Dashboard() {
 
     useEffect(() => {
         fetchAllTasks();
-    }, [])
+    }, [tasks])
 
     const handleLogout = () => {
         localStorage.removeItem("token");
