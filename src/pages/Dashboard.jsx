@@ -5,7 +5,6 @@ import useUsers from "../context/User.jsx";
 import LogoutModal from "../components/LogoutModal.jsx";
 import { useNavigate } from "react-router-dom";
 import useDashboardFunctionalities from "../hooks/dashboardFunctionalities.js";
-import e from "cors";
 
 function Dashboard() {
     const { fetchAllTasks, tasks } =
@@ -20,7 +19,11 @@ function Dashboard() {
     const total = tasks.length;
     const completed = tasks.filter((t) => t.status === "complete").length;
     const pending = tasks.filter((t) => t.status === "pending").length;
-    const percent = Math.round((completed / total) * 100);
+    let percent = 0;
+
+    if(total > 0){
+        percent =  Math.round((completed / total) * 100);
+    }
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -32,10 +35,6 @@ function Dashboard() {
     useEffect(() => {
         fetchAllTasks();
     }, [tasks]);
-
-    useEffect(() => {
-        console.log(loading)
-    }, [loading]);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
