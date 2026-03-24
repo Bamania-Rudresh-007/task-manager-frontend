@@ -28,7 +28,18 @@ function useDashboardFunctionalities(){
         }
     }
 
-    return {fetchAllTasks, tasks, createTasks};
+    const deleteTask = (taskId) => {
+        try {
+            API.delete(`/tasks/${taskId}`)
+                .then((res) => {
+                    console.log(res);
+                })
+        } catch (error) {
+            console.error("Failed deleting the task ", taskId, " Error: ", error);
+        }
+    }
+
+    return {fetchAllTasks, tasks, createTasks, deleteTask};
 }
 
 export default useDashboardFunctionalities;

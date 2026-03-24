@@ -1,5 +1,5 @@
 
-function TaskCard({ todo }) {
+function TaskCard({ todo, todoId, deleteTask }) {
   const isPending = todo.status === "pending";
 
   return (
@@ -58,7 +58,9 @@ function TaskCard({ todo }) {
           </span>
 
           {/* Delete btn */}
-          <button className="opacity-0 group-hover:opacity-100 transition-opacity w-7 h-7 flex items-center justify-center rounded-lg hover:bg-red-500/10 text-zinc-600 hover:text-red-400">
+          <button className="opacity-0 group-hover:opacity-100 transition-opacity w-7 h-7 flex items-center justify-center rounded-lg hover:bg-red-500/10 text-zinc-600 hover:text-red-400" onClick={() => {
+            deleteTask(todoId);
+          }}>
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path
                 d="M1.5 3.5h10M5 3.5V2.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1M10.5 3.5l-.6 7a1 1 0 01-1 .9H4.1a1 1 0 01-1-.9l-.6-7"

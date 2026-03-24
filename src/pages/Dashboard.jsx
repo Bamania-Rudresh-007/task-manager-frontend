@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useDashboardFunctionalities from "../hooks/dashboardFunctionalities..js"
 
 function Dashboard() {
-      const { fetchAllTasks, tasks } = useDashboardFunctionalities()
+      const { fetchAllTasks, tasks, deleteTask } = useDashboardFunctionalities()
   const [showModal, setShowModal] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
@@ -185,7 +185,7 @@ function Dashboard() {
                 <p className="text-sm">No tasks here yet</p>
               </div>
             ) : (
-              filtered.map((todo) => <TaskCard key={todo._id} todo={todo} />)
+              filtered.map((todo) => <TaskCard key={todo._id} todo={todo} todoId={todo._id} deleteTask={deleteTask}/>)
             )}
           </div>
         </div>
