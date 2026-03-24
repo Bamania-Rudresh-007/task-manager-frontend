@@ -10,13 +10,25 @@ function useDashboardFunctionalities(){
             API.get("/tasks")
                 .then((data) => {
                     setTasks(data.data.data)
-                    console.log(data)
                 })
         } catch (error) {
             console.error("Failed fetching all tasks from /api/tasks/ Error: " ,error)
         }
     }
-    return {fetchAllTasks, tasks};
+
+    const createTasks = (task) => {
+        try{
+            API.post("/tasks", task)
+                .then((res) => {
+                    console.log(res);
+                })
+        }
+        catch(error){
+            console.error("Failed creating new task Error: ", error);
+        }
+    }
+
+    return {fetchAllTasks, tasks, createTasks};
 }
 
 export default useDashboardFunctionalities;
