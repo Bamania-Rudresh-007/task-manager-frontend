@@ -1,4 +1,22 @@
+import { useState, useEffect } from "react";
+import useDashboardFunctionalities from "../hooks/dashboardFunctionalities.";
 function AddTaskModal({ onClose }) {
+    const { createTasks } = useDashboardFunctionalities()
+    const [newTask, setNewTask] = useState({title: "", description: "", status: ""});
+
+    const handleChange = (e) => {
+        const {id, value} = e.target;
+
+        setNewTask((prev) => ({...prev, [id]: value}))
+
+    }
+
+    const handleSubmit = () => {
+        console.log(newTask);
+        createTasks(newTask);
+        onClose();
+    }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       {/* Backdrop */}
@@ -28,6 +46,8 @@ function AddTaskModal({ onClose }) {
             <input
               type="text"
               placeholder="e.g. Fix login bug"
+              id="title"
+              onChange={(e) => handleChange(e)}
               className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors"
             />
           </div>
@@ -40,6 +60,8 @@ function AddTaskModal({ onClose }) {
             <textarea
               placeholder="Add some details about this task..."
               rows={3}
+              id="description"
+              onChange={(e) => handleChange(e)}
               className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors resize-none"
             />
           </div>
@@ -49,7 +71,11 @@ function AddTaskModal({ onClose }) {
             <label className="block text-zinc-400 text-xs uppercase tracking-widest mb-2">
               Status
             </label>
-            <select className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors">
+            <select className="w-full bg-[#0f0f0f] border border-zinc-700 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#c8f04d] focus:ring-1 focus:ring-[#c8f04d] transition-colors" id="status" onChange={(e) => {
+                handleChange(e)
+                console.log(e.target.value)
+            }}>
+              <option value="choose" hidden >Select the status</option>
               <option value="pending">Pending</option>
               <option value="complete">Complete</option>
             </select>
@@ -63,7 +89,7 @@ function AddTaskModal({ onClose }) {
           >
             Cancel
           </button>
-          <button className="flex-1 bg-[#c8f04d] hover:bg-[#d6f76a] text-[#0f0f0f] font-bold py-3 rounded-lg text-sm tracking-wide transition-all active:scale-[0.98]">
+          <button className="flex-1 bg-[#c8f04d] hover:bg-[#d6f76a] text-[#0f0f0f] font-bold py-3 rounded-lg text-sm tracking-wide transition-all active:scale-[0.98]" onClick={handleSubmit}>
             Add Task
           </button>
         </div>
