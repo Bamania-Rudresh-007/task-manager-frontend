@@ -4,24 +4,20 @@ import AddTaskModal from "../components/AddTaskModal.jsx";
 import useUsers from "../context/User.jsx";
 import LogoutModal from "../components/LogoutModal.jsx"
 import { useNavigate } from "react-router-dom";
-
-const SAMPLE_TODOS = [
-  { _id: "1", title: "Design database schema", description: "Plan out all collections and relationships for the project", status: "complete" },
-  { _id: "2", title: "Build authentication API", description: "Implement JWT-based login and signup endpoints", status: "complete" },
-  { _id: "3", title: "Integrate frontend with backend", description: "Connect all API endpoints to the React UI", status: "pending" },
-  { _id: "4", title: "Write API documentation", description: "Document all routes using Postman or Swagger", status: "pending" },
-  { _id: "5", title: "Deploy to production", description: "Host backend on Railway or Render and frontend on Vercel", status: "pending" },
-];
+import useDashboardFunctionalities from "../hooks/dashboardFunctionalities..js"
 
 function Dashboard() {
+      const { fetchAllTasks, tasks } = useDashboardFunctionalities()
   const [showModal, setShowModal] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
   const [nameAlpahabet, setNameAlpahabet] = useState("");
+
     const {userDetail} = useUsers();
-  const total = SAMPLE_TODOS.length;
-  const completed = SAMPLE_TODOS.filter((t) => t.status === "complete").length;
-  const pending = SAMPLE_TODOS.filter((t) => t.status === "pending").length;
+
+  const total = tasks.length;
+  const completed = tasks.filter((t) => t.status === "complete").length;
+  const pending = tasks.filter((t) => t.status === "pending").length;
   const percent = Math.round((completed / total) * 100);
 
     const navigate = useNavigate()
@@ -31,6 +27,11 @@ function Dashboard() {
         }
     }, [userDetail])
 
+
+    useEffect(() => {
+        fetchAllTasks();
+    }, [])
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("CurrentUserDetail");
@@ -39,8 +40,8 @@ function Dashboard() {
 
   const filtered =
     activeFilter === "all"
-      ? SAMPLE_TODOS
-      : SAMPLE_TODOS.filter((t) => t.status === activeFilter);
+      ? tasks
+      : tasks.filter((t) => t.status === activeFilter);
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] font-mono flex">
