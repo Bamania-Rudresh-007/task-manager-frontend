@@ -1,6 +1,8 @@
+import useDashboardFunctionalities from "../hooks/dashboardFunctionalities.js";
 
-function TaskCard({ todo, todoId, deleteTask }) {
+function TaskCard({ todo, todoId }) {
   const isPending = todo.status === "pending";
+    const { deleteTask, updateStatus } = useDashboardFunctionalities()
 
   return (
     <div className="group bg-[#161616] border border-zinc-800 hover:border-zinc-600 rounded-xl p-5 transition-all duration-200">
@@ -14,6 +16,7 @@ function TaskCard({ todo, todoId, deleteTask }) {
                 ? "border-zinc-600 group-hover:border-zinc-400"
                 : "border-[#c8f04d] bg-[#c8f04d]"
             }`}
+             onClick={() => updateStatus(todo)}
           >
             {!isPending && (
               <svg width="10" height="8" viewBox="0 0 10 8" fill="none">

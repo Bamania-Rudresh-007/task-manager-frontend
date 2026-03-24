@@ -28,6 +28,21 @@ function useDashboardFunctionalities(){
         }
     }
 
+    const updateStatus = async (todo) => {
+        try {
+            const updatedTask = {
+                status: todo.status === "complete" ? "pending" : "complete",
+            };
+
+        const response = await API.patch(`/tasks/${todo._id}`, updatedTask);
+        
+        console.log("Success:", response.data);
+
+        } catch (error) {
+            console.error("Failed to update the status of task Error: ", error);
+        }
+    }
+
     const deleteTask = (taskId) => {
         try {
             API.delete(`/tasks/${taskId}`)
@@ -39,7 +54,7 @@ function useDashboardFunctionalities(){
         }
     }
 
-    return {fetchAllTasks, tasks, createTasks, deleteTask};
+    return {fetchAllTasks, tasks, createTasks, updateStatus ,deleteTask};
 }
 
 export default useDashboardFunctionalities;
