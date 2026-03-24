@@ -5,16 +5,17 @@ import useUsers from "../context/User.jsx";
 import LogoutModal from "../components/LogoutModal.jsx";
 import { useNavigate } from "react-router-dom";
 import useDashboardFunctionalities from "../hooks/dashboardFunctionalities.js";
+import e from "cors";
 
 function Dashboard() {
-    const { fetchAllTasks, tasks, deleteTask, updateStatus } =
+    const { fetchAllTasks, tasks } =
         useDashboardFunctionalities();
     const [showModal, setShowModal] = useState(false);
     const [showLogout, setShowLogout] = useState(false);
     const [activeFilter, setActiveFilter] = useState("all");
     const [nameAlpahabet, setNameAlpahabet] = useState("");
 
-    const { userDetail } = useUsers();
+    const { userDetail, loading } = useUsers();
 
     const total = tasks.length;
     const completed = tasks.filter((t) => t.status === "complete").length;
@@ -31,6 +32,10 @@ function Dashboard() {
     useEffect(() => {
         fetchAllTasks();
     }, [tasks]);
+
+    useEffect(() => {
+        console.log(loading)
+    }, [loading]);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -220,6 +225,12 @@ function Dashboard() {
 
                     {/* Task list */}
                     <div className="space-y-3">
+                        {loading && (
+                            <div className="text-center py-16 text-zinc-600">
+                                <p className="text-4xl mb-3">◎</p>
+                                <p className="text-sm">Loading...</p>
+                            </div>
+                        )}
                         {filtered.length === 0 ? (
                             <div className="text-center py-16 text-zinc-600">
                                 <p className="text-4xl mb-3">◎</p>

@@ -1,15 +1,18 @@
 import { useState } from "react";
 import API from "../api/axios.js";
+import useUsers from "../context/User.jsx";
 
 function useDashboardFunctionalities(){
     
     const [tasks, setTasks] = useState([]);
+    const {setLoading} = useUsers()
 
     const fetchAllTasks = () => {
         try {
             API.get("/tasks")
                 .then((data) => {
                     setTasks(data.data.data)
+                    setLoading(false)
                 })
         } catch (error) {
             console.error("Failed fetching all tasks from /api/tasks/ Error: " ,error)

@@ -17,9 +17,14 @@ export function UserProvider({children}){
             return {};
         }
     });
+
+    const [loading, setLoading] = useState(true);
+
     const value = {
         userDetail,
         setUserDetail,
+        loading,
+        setLoading,
     }
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
